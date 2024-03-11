@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-type User = {
+type UserType = {
   name: string;
   email: string;
   password: string;
@@ -8,12 +8,6 @@ type User = {
 };
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true,"Please enter your username"],
-    unique: true,
-    minlength: [3, "Username must be at least 3 characters name"]
-  },
   fullname: {
     type: String,
     required: [true,"Please enter your fullname"],
