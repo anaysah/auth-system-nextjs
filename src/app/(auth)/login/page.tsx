@@ -29,7 +29,7 @@ export default function Login(){
             await axios.post("/api/auth/login", user)
             setSuccess("Login Successful")
             setLoading(false)
-            router.push("/")
+            router.push("/dashboard")
         }catch (e:any){
             // setError(e.message)
             setError(e.response.data.message)
