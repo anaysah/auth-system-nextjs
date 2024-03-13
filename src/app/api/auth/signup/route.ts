@@ -1,10 +1,17 @@
+import { sendMail } from "@/app/helpers/sendMail";
 import connectDB from "@/app/lib/connectDB";
 import User from "@/app/models/userModel";
 import bcryptjs from 'bcryptjs';
 import { NextRequest, NextResponse } from "next/server";
-
+import jwt from "jsonwebtoken";
 
 connectDB();
+
+interface TokenData {
+    id: string; // Assuming your token contains an 'id' field
+    name: string,
+    email:string
+}
 
 export async function POST(request:NextRequest){
     try{
@@ -24,11 +31,22 @@ export async function POST(request:NextRequest){
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password,salt);
 
+        const tokenData = {
+            email: email
+        }
+        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
+            expiresIn: '1d'
+        })
+
         const newUser = await new User({
             fullname,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            verificationToken: token,
+            verifyTokenExpiry: Date.now() + 60 * 60 * 24,
         }).save();
+
+        await sendMail("VERIFY", token)
 
         console.log(newUser);
 

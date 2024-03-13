@@ -11,6 +11,14 @@ export async function POST(request: NextRequest) {
     try {
         const { email, password } = await request.json();
         const user = await User.findOne({ email });
+        if(!user.isVerified){
+            return NextResponse.json({
+                message: 'User not verified'
+            }, {
+                status: 401
+            })
+        }
+
         if (!user) {
             return NextResponse.json({
                 message: 'User not found'
@@ -18,6 +26,7 @@ export async function POST(request: NextRequest) {
                 status: 404
             })
         }
+        
         const isMatch = await bcryptjs.compare(password, user.password);
         if (!isMatch) {
             return NextResponse.json({

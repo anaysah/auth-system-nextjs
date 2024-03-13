@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import LogInForm from "../components/LogInForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { sendMail } from "@/app/helpers/sendMail";
 
 export type LoginFormUserType = {
     email: string;
     password: string;
 }
+
+
 
 export default function Login(){
     const router = useRouter()
@@ -52,6 +55,9 @@ export default function Login(){
         <div className="container mx-auto p-4">
             <h1>Login</h1>
             <LogInForm user={user} setUser={setUser} onLogin={onLogin} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} Loading={Loading} setLoading={setLoading} error={error} setError={setError} success={success} setSuccess={setSuccess} />
+            <div>
+                Forgot Pass
+            </div>
         </div>
     )
 }
