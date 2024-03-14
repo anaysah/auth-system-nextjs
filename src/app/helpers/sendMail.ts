@@ -31,11 +31,11 @@ export const sendMail = async (emailType:string, token:string) => {
             const info = await transporter.sendMail(options)
             console.log('Verify Email sent:', info.response);
 
-        } else if (emailType === "FORGOT") {
+        } else if (emailType === "RESET") {
             console.log("will do later")
             options.subject = "Password Reset Mail"
             options.text = `
-            your verification link : ${process.env.DOMAIN+"api/auth/login/reset-password?token="+token}
+            your verification OTP : ${token}
             `
             const info = await transporter.sendMail(options)
             console.log('Forgot Email sent:', info.response);

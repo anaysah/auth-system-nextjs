@@ -4,6 +4,7 @@ import LogInForm from "../components/LogInForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { sendMail } from "@/app/helpers/sendMail";
+import Link from "next/link";
 
 export type LoginFormUserType = {
     email: string;
@@ -55,9 +56,9 @@ export default function Login(){
         <div className="container mx-auto p-4">
             <h1>Login</h1>
             <LogInForm user={user} setUser={setUser} onLogin={onLogin} buttonDisabled={buttonDisabled} setButtonDisabled={setButtonDisabled} Loading={Loading} setLoading={setLoading} error={error} setError={setError} success={success} setSuccess={setSuccess} />
-            <div>
-                Forgot Pass
-            </div>
+            <Link href="login/forgot-password">
+                Forgot Password?
+            </Link>
         </div>
     )
 }
